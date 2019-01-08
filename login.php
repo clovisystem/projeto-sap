@@ -69,7 +69,23 @@
 
 	<!-- Hero section -->
 	<section class="hero-section" style="height:1100px;">
-	<div id="notificacao" class="btn btn-danger"></div><div id="permissao" class="btn btn-success"></div>
+	<!--<div id="notificacao" class="btn btn-danger" style="visibility:-->
+	<?php
+		
+		if($_POST){
+
+				
+				echo '<div id="notificacao" class="btn btn-danger"></div>';
+				echo '<div id="permissao" class="btn btn-success"></div>';
+		}
+		else{
+			echo "";
+		}	
+	
+	
+		
+	 ?><!--"></div>
+	<div id="permissao" class="btn btn-success" style="visibility:-->
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 hero-text" id="credenciais" style="visibility:visible;">
@@ -128,7 +144,10 @@
 							if($verificaFuncionarioRows > 0){
 								echo"<script>
 									window.onload=function(){
-									$('#notificacao').html('Cadastro já existente!, tente outro nome');
+										$('#notificacao').show();
+										$('#notificacao').html('Cadastro já existente, tente outro nome');
+										
+										$('#permissao').hide();
 									}
 									</script>";	
 														
@@ -137,43 +156,34 @@
 							else{
 							//$nome=$_POST['nome'];
 							//$senha=$_POST['senha'];
-							//$repeteSenha=$_POST['repeteSenha'];
+				
+
+								$queryCadastra=mysqli_query($conexao,"insert into funcionarios (func_nome,func_senha,func_setor) values('$nomeCad','$senhaCad','$setorCad')");
+
+									echo"<script>
+									window.onload=function(){
+
+										$('#permissao').show();
+										$('#permissao').html('Cadastro realizado com sucesso, logue-se!');
+									
+										$('#notificacao').hide();
+									}
+									</script>";					
+									
+								
+							}
 
 									if($senhaCad != $repeteSenhaCad){
-										echo"<div class='danger'><h2>Senhas não estão iguais, confira novamente.</h2></div>";
-										echo"<br/><br/>";
-										echo"<button type='button' class='btn btn-primary' name='voltar' value='voltar' onclick='history.go(-1);'>Voltar</button>";	
-
-									}
-									
-									else{
-
-											$queryCadastra=mysqli_query($conexao,"insert into funcionarios (func_nome,func_senha,func_setor) values('$nomeCad','$senhaCad','$setorCad')");
-											
-												if($queryCadastra){
-
-													echo"<script>
-													window.onload=function(){
-														$('#permissao').html('Cadastro realizado com sucesso, logue-se!');
-													}
-													</script>";					
-													
-												}
-												else{
-													echo"<script>
-													window.onload=function(){
-															$('#notificacao').html('Cadastro exixtente!');
-														}
+												echo"<script>
+															window.onload=function(){
+																	$('#notificacao').html('Senhas não conferem.');
+																}
 													</script>";
-																	
-												}
-											
-												
-											}
-											
 									}
+											
+								}
 							
-						}
+					
 					?>
 				</div>
 				<div class="col-md-6" id="cadastroImage" style="visibility:hidden;">
