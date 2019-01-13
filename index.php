@@ -21,6 +21,21 @@
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="jquery-3.2.1.min.js"/>
 
+	<style>
+	#titulo{
+		margin-left:5%;
+	}
+	h4{
+		color:purple;
+	}
+	x{
+		color:purple;
+		font-size:80px;
+	}
+	.site-btn{
+		background:transparent;
+	}
+	</style>
 
 	<!--[if lt IE 9]>
 	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -32,7 +47,7 @@
 <?php
 	include('conexao.php');
     $_SESSION['usuario']=$_POST['nome'];
-	echo $_SESSION['usuario'];
+	//echo $_SESSION['usuario'];
 
     if($_SESSION['usuario']==null){//para que a paggina de index nao seja acessada antes do login
         header("location:login.php");
@@ -58,7 +73,7 @@
 			foreach($query as $usuario){
 				echo'<script>
 				window.onload=function(){
-					$("#titulo").html("Bem-Vindo, '.$usuario["func_nome"].' ao SAP</h3>");
+					$("#titulo").html("<span><h4>'.ucwords($usuario["func_nome"]).' , Bem-Vindo ao <x>SAP</x></h4></span>");
 				}
 				</script>';
 			}
@@ -79,8 +94,17 @@
 				<img src="img/logo.png" alt="">
 			</a>
 			<div class="responsive-bar"><i class="fa fa-bars"></i></div>
-			<a href="" class="user"><i class="fa fa-user"></i></a>
-			<a href="" class="site-btn">Sign Up Free</a>
+			<!--<a href="" class="user"><i class="fa fa-user"></i></a>-->
+			<?php
+				
+				echo'<form name="logout" method="post" action="login.php">';
+				echo'<button name="logoutButton" class="site-btn">Logout</button>';
+				echo'</form>';
+				if($_POST['logoutButton']){
+					$usuario=$_SESSION['usuario'];
+					unset($usuario);
+				}
+			?>
 			<nav class="main-menu">
 				<ul class="menu-list">
 					<li><a href="">Solution</a></li>
@@ -112,8 +136,16 @@
 					</form>
 				</div>-->
 				<div class="col-md-6">
+				<br/><br/>
 				<button class="btn btn-primary">Fluxo de Caixa</button>
-					<img src="img/laptop.png" class="laptop-image" alt="">
+				<br/><br/><br/>
+				<button class="btn btn-primary">Fluxo de Caixa</button>
+				<br/><br/><br/>
+				<button class="btn btn-primary">Fluxo de Caixa</button>
+				<br/><br/><br/>
+				<button class="btn btn-primary">Fluxo de Caixa</button>
+				<br/><br/><br/>
+				<img src="img/laptop.png" class="laptop-image" alt="">
 				</div>
 			</div>
 		</div>

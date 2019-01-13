@@ -22,6 +22,13 @@
     <link rel="stylesheet" href="jquery-3.2.1.min.js"/>
 
 
+	<style>
+
+	h2{
+		color:purple;
+	}
+
+	</style>
 	<!--[if lt IE 9]>
 	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -72,7 +79,7 @@
 	<!--<div id="notificacao" class="btn btn-danger" style="visibility:-->
 	<?php
 		
-		if($_POST){
+		if($_POST['cadastrar']){
 
 				
 				echo '<div id="notificacao" class="btn btn-danger"></div>';
