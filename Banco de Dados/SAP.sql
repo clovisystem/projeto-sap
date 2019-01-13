@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Tempo de geração: 13/01/2019 às 18:00
+-- Tempo de geração: 13/01/2019 às 18:24
 -- Versão do servidor: 5.7.20-0ubuntu0.16.04.1
 -- Versão do PHP: 7.0.26-2+ubuntu16.04.1+deb.sury.org+2
 
@@ -28,6 +28,7 @@ USE `SAP`;
 -- Estrutura para tabela `clientes`
 --
 
+DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `cli_id` int(11) NOT NULL,
   `cli_nome` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -42,25 +43,10 @@ CREATE TABLE `clientes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `compras`
---
-
-CREATE TABLE `compras` (
-  `compra_id` int(11) NOT NULL,
-  `compra_produto` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `compra_cliente` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `compra_data` datetime NOT NULL,
-  `compra_pago` enum('NAO','SIM','PENDENTE','') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `compra_recebido` enum('NAO','SIM','PENDENTE','') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `compra_qtde` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `funcionarios`
 --
 
+DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE `funcionarios` (
   `func_id` int(11) NOT NULL,
   `func_nome` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -95,6 +81,7 @@ INSERT INTO `funcionarios` (`func_id`, `func_nome`, `func_senha`, `func_setor`) 
 -- Estrutura para tabela `produtos`
 --
 
+DROP TABLE IF EXISTS `produtos`;
 CREATE TABLE `produtos` (
   `prod_id` int(11) NOT NULL,
   `prod_nome` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -108,6 +95,7 @@ CREATE TABLE `produtos` (
 -- Estrutura para tabela `vendas`
 --
 
+DROP TABLE IF EXISTS `vendas`;
 CREATE TABLE `vendas` (
   `venda_id` int(11) NOT NULL,
   `venda_produto` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -128,12 +116,6 @@ CREATE TABLE `vendas` (
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`cli_id`),
   ADD KEY `cli_nome` (`cli_nome`);
-
---
--- Índices de tabela `compras`
---
-ALTER TABLE `compras`
-  ADD PRIMARY KEY (`compra_id`);
 
 --
 -- Índices de tabela `funcionarios`
@@ -163,11 +145,6 @@ ALTER TABLE `vendas`
 --
 ALTER TABLE `clientes`
   MODIFY `cli_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de tabela `compras`
---
-ALTER TABLE `compras`
-  MODIFY `compra_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de tabela `funcionarios`
 --
