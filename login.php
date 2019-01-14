@@ -41,11 +41,14 @@
 			$('#credenciaisImage').hide();
         }
     </script>
+		
 </head>
 <body>
+		
 	<?php
-	include('conexao.php');
+		include('conexao.php');
 	?>
+
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -53,11 +56,14 @@
 
 	<!-- Header section -->
 	<header class="header-section clearfix">
+
 		<div class="container-fluid">
+
 			<a href="index.html" class="site-logo">
 				<img src="img/logo.png" alt="">
 			</a>
-			<div class="responsive-bar"><i class="fa fa-bars"></i></div>
+			<div class="responsive-bar">
+			<i class="fa fa-bars"></i></div>
 			<a href="" class="user"><i class="fa fa-user"></i></a>
 			<button type="button" style="background:transparent;"  class="site-btn" onclick="cadastrar()">Cadastrar Novo Funcionário</button>
 			<nav class="main-menu">
@@ -77,6 +83,7 @@
 	<!-- Hero section -->
 	<section class="hero-section" style="height:1100px;">
 	<!--<div id="notificacao" class="btn btn-danger" style="visibility:-->
+
 	<?php
 		
 		if($_POST['cadastrar']){
@@ -94,9 +101,11 @@
 	 ?><!--"></div>
 	<div id="permissao" class="btn btn-success" style="visibility:-->
 		<div class="container">
+
 			<div class="row">
+
 				<div class="col-md-6 hero-text" id="credenciais" style="visibility:visible;">
-					<h2>Suas Credenciais</h2>
+					<h2>Suas Credenciais</h2>		
 					<!--<h4>Use modern progressive technologies of Bitcoin to earn money</h4>-->
 					<form class="hero-subscribe-from" method="post" action="index.php">
                         <input type="text" name="nome" placeholder="Seu nome de usuário" required>

@@ -20,13 +20,14 @@
 	<link rel="stylesheet" href="css/owl.carousel.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="jquery-3.2.1.min.js"/>
-
+	<script src="js/jquery-3.2.1.min.js"></script>
 	<style>
 	#titulo{
 		margin-left:5%;
 	}
 	h4{
 		color:purple;
+
 	}
 	x{
 		color:purple;
@@ -34,6 +35,23 @@
 	}
 	.site-btn{
 		background:transparent;
+	}
+	#menu{
+		margin-left:6%;
+		margin-top:-3.3%;
+		position:relative;
+		float:left;
+		width:100%;
+		
+	}
+	#botaoMenu{
+		margin:4%;
+	}
+	#conteudo{
+		margin-bottom:40px;
+	}
+	#buttonVoltar{
+
 	}
 	</style>
 
@@ -46,6 +64,7 @@
 <body>
 <?php
 	include('conexao.php');
+	session_start();
     $_SESSION['usuario']=$_POST['nome'];
 	//echo $_SESSION['usuario'];
 
@@ -73,7 +92,7 @@
 			foreach($query as $usuario){
 				echo'<script>
 				window.onload=function(){
-					$("#titulo").html("<span><h4>'.ucwords($usuario["func_nome"]).' , Bem-Vindo ao <x>SAP</x></h4></span>");
+					$("#titulo").html("<span><h4>'.ucwords($logon=$usuario["func_nome"]).' , Bem-Vindo ao <x>SAP</x></h4></span>");
 				}
 				</script>';
 			}
@@ -135,16 +154,108 @@
 						<button class="site-btn sb-gradients">Get Started</button>
 					</form>
 				</div>-->
-				<div class="col-md-6">
+				<div class="col-md-12">
 				<br/><br/>
-				<button class="btn btn-primary">Fluxo de Caixa</button>
-				<br/><br/><br/>
-				<button class="btn btn-primary">Fluxo de Caixa</button>
-				<br/><br/><br/>
-				<button class="btn btn-primary">Fluxo de Caixa</button>
-				<br/><br/><br/>
-				<button class="btn btn-primary">Fluxo de Caixa</button>
-				<br/><br/><br/>
+
+				<form name="fluxo_caixa" id="menu" method="post" action="" style="visibility:visible">
+				<button class="btn btn-primary" id="botaoMenu" name="fluxo_caixa_button" style="visibility:visible" value="fluxo_de_caixa">Fluxo de Caixa</button>
+				
+				<button class="btn btn-primary" id="botaoMenu"  name="contas_receber_button" style="visibility:visible" value="contas_a_receber">Contas a Receber</button>
+
+				<button class="btn btn-primary" id="botaoMenu"  name="contas_receber_button" style="visibility:visible" value="contas_a_receber">Contas a Receber</button>
+
+				<button class="btn btn-primary" id="botaoMenu" name="buttonReserv" style="visibility:visible" value="#">#</button>
+				
+				<input type="hidden" name="nome" value="<?php echo $func_nome; ?>" />
+				<input type="hidden" name="senha" value="<?php echo $func_senha; ?>" />
+				</form>
+				<?php
+				if($_POST['fluxo_caixa_button']=='fluxo_de_caixa'){
+					echo '<script>document.querySelector("#menu").style.display="none";</script>';
+				
+					echo '<form method="post" action="index.php">';
+					echo '<input type="hidden" name="nome" value="'.$func_nome.'" />';
+					echo '<input type="hidden" name="senha" value="'.$func_senha.'" />';
+					//echo $func_nome;
+					echo '<button type="submit" name="voltar" value="Voltar" >Voltar</button>';
+					echo '</form>';
+
+					
+					echo '<div id="conteudo"><h1>Fluxo de Caixa</h1></div>';
+				
+				}
+				if($_POST['contas_pagar_button']=='contas_a_pagar'){
+					echo '<script>document.querySelector("#menu").style.display="none";</script>';
+					
+					echo '<form method="post" action="index.php">';
+					echo '<input type="hidden" name="nome" value="'.$func_nome.'" />';
+					echo '<input type="hidden" name="senha" value="'.$func_senha.'" />';
+					//echo $func_nome;
+					echo '<button type="submit" name="voltar" value="Voltar" >Voltar</button>';
+					echo '</form>';
+
+					
+					echo '<div id="conteudo"><h1>Contas a Pagar</h1></div>';
+					}
+				if($_POST['contas_receber_button']=='contas_a_receber'){
+					echo '<script>document.querySelector("#menu").style.display="none";</script>';
+					
+					echo '<form method="post" action="index.php">';
+					echo '<input type="hidden" name="nome" value="'.$func_nome.'" />';
+					echo '<input type="hidden" name="senha" value="'.$func_senha.'" />';
+					//echo $func_nome;
+					echo '<button type="submit" name="voltar" value="Voltar" >Voltar</button>';
+					echo '</form>';
+
+					
+					echo '<div id="conteudo"><h1>Contas a Receber</h1></div>';
+					
+					}
+				if($_POST['buttonReserv']){
+					echo '<script>document.querySelector("#menu").style.display="none";</script>';
+					
+					echo '<form method="post" action="index.php">';
+					echo '<input type="hidden" name="nome" value="'.$func_nome.'" />';
+					echo '<input type="hidden" name="senha" value="'.$func_senha.'" />';
+					//echo $func_nome;
+					echo '<button type="submit" name="voltar" value="Voltar" >Voltar</button>';
+					echo '</form>';
+
+					
+					echo '<div id="conteudo"><h1>#</h1></div>';
+					
+					}
+				?>
+				
+				
+
+
+				<?php
+				/*	if($_POST['fluxo_caixa_button']=='fluxo_de_caixa'){
+					
+						echo '<h1>Fluxo de Caixa</h1>';
+			
+					}
+				?>
+				<?php
+					if($_POST['contas_pagar_button']=='contas_a_pagar'){
+						echo '<h1>Fluxo de Caixa</h1>';
+					}
+				?>
+				<?php
+					if($_POST['contas_receber_button']=='contas_a_receber'){
+						echo '<h1>Fluxo de Caixa</h1>';
+					}
+				?>
+				<?php
+					if($_POST['#']){
+						echo '<h1>Fluxo de Caixa</h1>';
+					}*/
+				?>
+
+				<!--<br/><br/><br/>-->
+
+				
 				<img src="img/laptop.png" class="laptop-image" alt="">
 				</div>
 			</div>
