@@ -53,6 +53,13 @@
 	#buttonVoltar{
 
 	}
+
+	table{
+		
+	}
+	th, td{
+		
+	}
 	</style>
 
 	<!--[if lt IE 9]>
@@ -170,6 +177,7 @@
 				<input type="hidden" name="senha" value="<?php echo $func_senha; ?>" />
 				</form>
 				<?php
+				
 				if($_POST['fluxo_caixa_button']=='fluxo_de_caixa'){
 					echo '<script>document.querySelector("#menu").style.display="none";</script>';
 				
@@ -182,7 +190,9 @@
 
 					
 					echo '<div id="conteudo"><h1>Fluxo de Caixa</h1></div>';
+					require("Modulo_Fluxo_de_Caixa/fluxo_caixa_sap.php");
 				
+
 				}
 				if($_POST['contas_pagar_button']=='contas_a_pagar'){
 					echo '<script>document.querySelector("#menu").style.display="none";</script>';
