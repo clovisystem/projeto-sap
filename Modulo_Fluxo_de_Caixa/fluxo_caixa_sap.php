@@ -99,8 +99,8 @@ if($linhaProdutos > 0){
 <tbody>
     <tr>
 <?php
-
-    while($row=mysqli_fetch_array($queryProdutos)){
+ $i=0;
+    while($row=mysqli_fetch_assoc($queryProdutos)){
     //foreach($queryProdutos as $query){
     //for($i==0;$i<$linhaProdutos;$i++){
         //echo'<form method="post" action="">';
@@ -109,21 +109,22 @@ if($linhaProdutos > 0){
         //echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_qtde" name="prod_qtde_table"  onmouseout="gravando()" contenteditable="false" onclick="salvar()" value="'.$queryProdutos->fetch_object()->prod_qtde.'"/></td>';
         //echo'<input type="hidden" id="prod_id" name="prod_id_table" value="'.$queryProdutos->fetch_object()->prod_id.'"/>';
         
-        
-        
+       
+        $i;
         echo'<form method="post" action="">';
-        echo'<td><input type="text" style="border:none; background:transparent;" id="prod_nome" name="prod_nome_table"  contenteditable="false" onclick="salvar()" value="'.$row["prod_nome"].'"/></td>';
-        echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_valor" name="prod_valor_table"  contenteditable="false" onclick="salvar()" value="'.$row["prod_valor"].'"/></td>';
-        echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_qtde" name="prod_qtde_table"   contenteditable="false" onclick="salvar()" value="'.$row["prod_qtde"].'"/></td>';
+        echo'<td><input type="text" style="border:none; background:transparent;" id="prod_nome" name="prod_nome_table"  contenteditable="false" onclick="salvar('.$i.')" value="'.$row["prod_nome"].'"/></td>';
+        
+        echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_valor" name="prod_valor_table"  contenteditable="false" onclick="salvar('.$i.')" value="'.$row["prod_valor"].'"/></td>';
+        echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_qtde" name="prod_qtde_table"   contenteditable="false" onclick="salvar('.$i.')" value="'.$row["prod_qtde"].'"/></td>';
         echo'<input type="hidden" id="prod_id" name="prod_id_table" value="'.$row["prod_id"].'"/>';
 
         echo'<td ><button name="gravar" class="btn btn-primary" id="gravar" value="Gravar"  style="width:46%; display:none;">Gravar</button>';
         echo'</form>';
+        
 
+        echo'<button name="editar" class="btn btn-primary" id="editar" value="Editar" onclick="editar('.$i.')" style="width:46%;">Editar '.$row["prod_nome"].'</button></td>';
 
-        echo'<button name="editar" class="btn btn-primary" id="editar" value="Editar" onclick="editar()" style="width:46%;">Editar '.$row["prod_nome"].'</button></td>';
-
-
+        $i++;
 
         
         echo'</tr><tr>';
@@ -151,21 +152,21 @@ else{
 </tbody>
 </table>
 <script>
-
-function editar(){
-    var content_nome = document.querySelector('#prod_nome');
-    var content_valor = document.querySelector('#prod_valor');
-    var content_qtde = document.querySelector('#prod_qtde');
+var i=0;
+function editar(i){
+    var content_nome = document.querySelectorAll('#prod_nome');
+    var content_valor = document.querySelectorAll('#prod_valor');
+    var content_qtde = document.querySelectorAll('#prod_qtde');
 
     
 
     //for(i==0;i<content_nome.length;i++){
-        content_nome.contentEditable= "true";
-        content_valor.contentEditable= "true";
-        content_qtde.contentEditable= "true";
+        content_nome[i].contentEditable= "true";
+        content_valor[i].contentEditable= "true";
+        content_qtde[i].contentEditable= "true";
 
-        content_nome.focus();
-        content_nome.select();
+        content_nome[i].focus();
+        content_nome[i].select();
     //}
 
    
@@ -180,13 +181,21 @@ function editar(){
 
 
 
-function salvar(){
-    $("#editar").hide();
-    $("#gravar").show();
-    var content_nome = document.querySelector('#prod_nome');
-    var content_valor = document.querySelector('#prod_valor');
-    var content_qtde = document.querySelector('#prod_qtde');
-    var content_id = document.querySelector('#prod_id');
+function salvar(i){
+
+    var editar = document.querySelectorAll('#editar');
+    var gravar = document.querySelectorAll('#gravar');
+
+    editar[i].style.visibility="hidden";
+    gravar[i].style.display="block";
+
+
+
+
+    var content_nome = document.querySelectorAll('#prod_nome');
+    var content_valor = document.querySelectorAll('#prod_valor');
+    var content_qtde = document.querySelectorAll('#prod_qtde');
+    var content_id = document.querySelectorAll('#prod_id');
 
 
     //if(document.getElementById("editar").value == "Editar"){
@@ -196,9 +205,9 @@ function salvar(){
         
         $("#gravar").click(function(){
             
-            content_nome.contentEditable= "false";
-            content_valor.contentEditable= "false";
-            content_qtde.contentEditable= "false";
+            content_nome[i].contentEditable= "false";
+            content_valor[i].contentEditable= "false";
+            content_qtde[i].contentEditable= "false";
 
             var prod_nome=$("#prod_nome").val();
             var prod_valor=$("#prod_valor").val();
