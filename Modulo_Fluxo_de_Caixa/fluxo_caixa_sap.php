@@ -11,7 +11,7 @@ function exibeInsercao(){
 </script>
 
         <button class="form-control" onclick="exibeInsercao()" name="inserir" value="Inserir Produtos">Inserir Produtos</button>
-
+        <div class="notificacao"></div>
 <?php
 include("../conexao.php");
     
@@ -38,8 +38,8 @@ include("../conexao.php");
             $produto=filter_input(INPUT_POST,produto);
             $valor=filter_input(INPUT_POST,valor);
             $qtde=filter_input(INPUT_POST,quantidade);
-	
-            $valor=(float)$valor;
+            echo $valor;
+            
 
             echo '<script>document.querySelector("#menu").style.display="none";</script>';
 				
@@ -51,21 +51,23 @@ include("../conexao.php");
             
             $verificaExistencia=mysqli_query($conexao,"SELECT * FROM produtos WHERE prod_nome='$produto'");
             $verificaExistenciaLinhas=mysqli_num_rows($verificaExistencia);
-            echo $verificaExistenciaLinhas;
+            //echo '<label class="form-control">'.$verificaExistenciaLinhas.' produtos cadastrados.</label>';
          
             if($verificaExistenciaLinhas > 0){
                 $atualizaProduto=mysqli_query($conexao,"UPDATE SET produtos WHERE prod_nome='$produto' and prod_qtde=prod_qtde + ".(int)$qtde);
                 
             }
             else{
-                $insereProduto=mysqli_query($conexao,"insert into produtos (prod_nome,prod_valor,prod_qtde) values ('$produto','".number_format($valor,2,".",",")."','$qtde')");
+                $insereProduto=mysqli_query($conexao,"insert into produtos (prod_nome,prod_valor,prod_qtde) values ('$produto',".number_format($valor,2,'.',',').",".$qtde.")");
+               
                 
-                
-                if(!$insereProduto){
-                    echo"falha";
+                if($insereProduto){
+                    echo "<div class='alert alert-success'>Seu produto foi cadastrado</div>";
+                  
                 }
                 else{
-                    echo "<div class='alert alert-success'>Seu produto foi cadastrado</div>";
+                    echo"falha";
+                   
                 }
             }
             
@@ -77,12 +79,12 @@ include("../conexao.php");
 
 
 
+//echo'<script>window.onload=function(){$("#gravar").hide();}</script>';
 
-
-$queryProdutos=mysqli_query($conexao,"SELECT * FROM produtos");
+$queryProdutos=mysqli_query($conexao,"SELECT * FROM produtos ORDER BY prod_id DESC");
 
 $linhaProdutos=mysqli_num_rows($queryProdutos);
-echo $linhaProdutos;
+echo '<label class="form-control">'.$linhaProdutos.' produtos cadastrados.</label>';
 if($linhaProdutos > 0){
 ?>
 <table class="table table-striped">
@@ -97,12 +99,35 @@ if($linhaProdutos > 0){
 <tbody>
     <tr>
 <?php
-    while($row=mysqli_fetch_assoc($queryProdutos)){
-        echo'<td id="prod_nome" contenteditable="false" onclick="salvar()">'.$row["prod_nome"].'</td>';
-        echo'<td id="prod_valor" contenteditable="false" onclick="salvar()">'.$row["prod_valor"].'</td>';
-        echo'<td id="prod_qtde" contenteditable="false" oncclick="salvar()">'.$row["prod_qtde"].'</td>';
-        echo'<td ><button name="editar" id="editar" value="Editar" onclick="editar()">Editar'.$row["prod_nome"].'</button></td>';
+
+    while($row=mysqli_fetch_array($queryProdutos)){
+    //foreach($queryProdutos as $query){
+    //for($i==0;$i<$linhaProdutos;$i++){
+        //echo'<form method="post" action="">';
+        //echo'<td><input type="text" style="border:none; background:transparent;" id="prod_nome" name="prod_nome_table" onmouseout="gravando()" contenteditable="false" onclick="salvar()" value="'.$queryProdutos->fetch_object()->prod_nome.'"/></td>';
+        //echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_valor" name="prod_valor_table" onmouseout="gravando()" contenteditable="false" onclick="salvar()" value="'.$queryProdutos->fetch_object()->prod_valor.'"/></td>';
+        //echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_qtde" name="prod_qtde_table"  onmouseout="gravando()" contenteditable="false" onclick="salvar()" value="'.$queryProdutos->fetch_object()->prod_qtde.'"/></td>';
+        //echo'<input type="hidden" id="prod_id" name="prod_id_table" value="'.$queryProdutos->fetch_object()->prod_id.'"/>';
+        
+        
+        
+        echo'<form method="post" action="">';
+        echo'<td><input type="text" style="border:none; background:transparent;" id="prod_nome" name="prod_nome_table"  contenteditable="false" onclick="salvar()" value="'.$row["prod_nome"].'"/></td>';
+        echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_valor" name="prod_valor_table"  contenteditable="false" onclick="salvar()" value="'.$row["prod_valor"].'"/></td>';
+        echo'<td><input type="text" style="border:none; background:transparent;"  id="prod_qtde" name="prod_qtde_table"   contenteditable="false" onclick="salvar()" value="'.$row["prod_qtde"].'"/></td>';
+        echo'<input type="hidden" id="prod_id" name="prod_id_table" value="'.$row["prod_id"].'"/>';
+
+        echo'<td ><button name="gravar" class="btn btn-primary" id="gravar" value="Gravar"  style="width:46%; display:none;">Gravar</button>';
+        echo'</form>';
+
+
+        echo'<button name="editar" class="btn btn-primary" id="editar" value="Editar" onclick="editar()" style="width:46%;">Editar '.$row["prod_nome"].'</button></td>';
+
+
+
+        
         echo'</tr><tr>';
+
     }
 }
 else{
@@ -110,34 +135,97 @@ else{
     //echo'<td ><button name="editar" value="Editar" onclick="editar()">Editar '.$row["prod_nome"].'</button></td>';
 
 }
+    /*$produtoTable=$_POST["prod_nome_table"];
+    $valorTable=$_POST["prod_valor_table"];
+    $qtdeTable=$_POST["prod_qtde_table"];
 
+    if($_POST["editar"]=="Gravar"){
+        echo '<form method="post" action="">';
+        echo '<input type="hidden" name="nome" value="'.$func_nome.'" />';
+        echo '<input type="hidden" name="senha" value="'.$func_senha.'" />'; 
+        echo '</form>';
+        $atualizaProduto=mysqli_query($conexao,"UPDATE produtos SET prod_nome='$produtoTable' and prod_valor='$valorTable' and prod_qtde='$qtdeTable'");
+    }*/
 ?>
     </tr>
 </tbody>
 </table>
 <script>
-function editar(){
 
+function editar(){
     var content_nome = document.querySelector('#prod_nome');
     var content_valor = document.querySelector('#prod_valor');
     var content_qtde = document.querySelector('#prod_qtde');
-  
-    content_nome.contentEditable= "true";
-    content_valor.contentEditable= "true";
-    content_qtde.contentEditable= "true";
 
+    
 
+    //for(i==0;i<content_nome.length;i++){
+        content_nome.contentEditable= "true";
+        content_valor.contentEditable= "true";
+        content_qtde.contentEditable= "true";
+
+        content_nome.focus();
+        content_nome.select();
+    //}
+
+   
     //if(document.getElementById("editar").innerHTML == "Editar"){
-     //   document.getElementById("editar").innerHTML = "Gravar";
+    //   document.getElementById("editar").innerHTML = "Gravar";
 
     //}
-   
-   
-}
-function salvar(){
-    if(document.getElementById("editar").value == "Editar"){
-        document.getElementById("editar").innerHTML = "Gravar";
 
-    }
+
+}
+
+
+
+
+function salvar(){
+    $("#editar").hide();
+    $("#gravar").show();
+    var content_nome = document.querySelector('#prod_nome');
+    var content_valor = document.querySelector('#prod_valor');
+    var content_qtde = document.querySelector('#prod_qtde');
+    var content_id = document.querySelector('#prod_id');
+
+
+    //if(document.getElementById("editar").value == "Editar"){
+        //var nomeCampo=document.getElementById("editar").name = "gravar";
+        //var nomeValor=document.getElementById("editar").value = "Gravar";
+        //var nomeInnerHtml=document.getElementById("editar").innerHTML = "Gravar";
+        
+        $("#gravar").click(function(){
+            
+            content_nome.contentEditable= "false";
+            content_valor.contentEditable= "false";
+            content_qtde.contentEditable= "false";
+
+            var prod_nome=$("#prod_nome").val();
+            var prod_valor=$("#prod_valor").val();
+            var prod_qtde=$("#prod_qtde").val();
+            var prod_id=$("#prod_id").val();
+
+            if(prod_nome != ""){
+                var dados={produto:prod_nome,
+                        valor:prod_valor,
+                        qtde:prod_qtde,
+                        id:prod_id};
+                
+                    $.post('../Banco de Dados/atualiza.php',dados,function(retorna){
+                        $(".notificacao").html(retorna);
+                    });
+                
+            }       
+            alert(prod_nome);  
+            alert(prod_id);  
+            window.location="../Banco de Dados/atualiza.php";
+            exit;
+        });
+        
+  //      }
+
+
 }
 </script>
+
+
