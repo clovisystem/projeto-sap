@@ -70,7 +70,7 @@
 </head>
 <body>
 <?php
-	include('conexao.php');
+	include('Banco de Dados/conexao.php');
 	session_start();
     $_SESSION['usuario']=$_POST['nome'];
 	//echo $_SESSION['usuario'];
@@ -189,8 +189,8 @@
 					echo '</form>';
 
 					
-					echo '<div id="conteudo"><h1>Fluxo de Caixa</h1></div>';
-					require("Modulo_Fluxo_de_Caixa/fluxo_caixa_sap.php");
+					echo '<div id="conteudo"><h1>Controle de Estoque</h1></div>';
+					require("Modulo_Controle_de_Estoque/controle_de_estoque.php");
 				
 
 				}

@@ -46,7 +46,7 @@
 <body>
 		
 	<?php
-		include('conexao.php');
+		include('Banco de Dados/conexao.php');
 	?>
 
 	<!-- Page Preloder -->
