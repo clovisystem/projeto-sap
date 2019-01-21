@@ -46,7 +46,8 @@
 <body>
 		
 	<?php
-		include('Banco de Dados/conexao.php');
+		ini_set("display_errors",0);
+		include('Banco_de_Dados/conexao.php');
 	?>
 
 	<!-- Page Preloder -->

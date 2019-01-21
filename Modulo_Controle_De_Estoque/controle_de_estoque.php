@@ -13,7 +13,8 @@ function exibeInsercao(){
         <button class="form-control" onclick="exibeInsercao()" name="inserir" value="Inserir Produtos">Inserir Produtos</button>
         <div class="notificacao"></div>
 <?php
-include("../Banco de Dados/conexao.php");
+ini_set("display_errors",0);
+include("../Banco_de_Dados/conexao.php");
     
         echo'<form name="salva" method="post" action="">';
             echo'<div class="form-group" >';

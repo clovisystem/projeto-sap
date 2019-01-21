@@ -70,7 +70,8 @@
 </head>
 <body>
 <?php
-	include('Banco de Dados/conexao.php');
+	ini_set("display_errors",0);
+	include('Banco_de_Dados/conexao.php');
 	session_start();
     $_SESSION['usuario']=$_POST['nome'];
 	//echo $_SESSION['usuario'];

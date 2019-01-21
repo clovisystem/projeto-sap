@@ -1,0 +1,13 @@
+cpanel.hyperphp.com
+
+
+
+username: sap_usuario
+password: 9877xc9877xc
+mysqlusername: sap_usuario
+mysqlhostname: www.db4free.ne
+banco: controle_sap
+
+https://www.db4free.net
+
+
